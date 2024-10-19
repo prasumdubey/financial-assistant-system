@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>History - Financial Decision Assistant</title>
+    <link rel="icon" type="image/jpeg" href="download.jpeg">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            background-image: url('yes11.avif'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .history-container {
+            background-color: white;
+            border:3px solid black;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .history-container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+        }
+
+        .history-container button{
+            width: 18%;
+            padding: 5px;
+            margin-left: 400px;
+            margin-top:300px;
+            background-color: #1900ff;
+            color: white;
+            border:2px solid black;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .history-container button:hover {
+            background-color: #160894;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 2px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #1900ff;
+            color: white;
+        }
+
+        td {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="history-container">
+        <h1>Transaction History</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Transaction Type</th>
+                    <th>Amount (₹)</th>
+                    <th>Balance (₹)</th>
+                    <th>Profit (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through transactions and populate rows -->
+                <% transactions.forEach(transaction => { %>
+                    <tr>
+                        <td><%= new Date(transaction.timestamp).toLocaleDateString() %></td>
+                        <td><%= transaction.action %></td>
+                        <td>₹<%= transaction.amount %></td>
+                        <td>₹<%= transaction.remaining_balance || 'N/A' %></td>
+                        <td>₹<%= transaction.profit_loss || 'N/A' %></td>
+                    </tr>
+                <% }) %>
+                <!-- If no transactions, show a message -->
+                <% if (transactions.length === 0) { %>
+                    <tr>
+                        <td colspan="5" style="text-align:center;">No transactions found.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+        <button onclick="window.location.href='/dashboard'">Back to Dashboard</button>
+    </div>
+</body>
+</html>

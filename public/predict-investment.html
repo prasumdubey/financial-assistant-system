@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Predict Investment - Financial Decision Assistant</title>
+    <link rel="icon" type="image/jpeg" href="download.jpeg">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Navbar styles */
+        nav {
+            background-color: #1E2A5E;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav li {
+            margin: 0 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Basic styling for the prediction page */
+        body {
+            background-color: #7C93C3;
+            font-family: 'times new roman', 'Arial Narrow', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding-top: 60px; /* Space for the fixed navbar */
+        }
+
+        /* Result styling */
+        .result {
+            font-size: 36px;
+            font-weight: bold;
+            color: #1E2A5E;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .predict-container {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #1E2A5E;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .predict-container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .predict-container button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #1E2A5E;
+            border: 2px solid #1E2A5E;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .predict-container button:hover {
+            background-color: #55679C;
+        }
+
+        /* Back to Dashboard button */
+        .back-button {
+            width: 300px;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #55679C;
+            border: 2px solid #1E2A5E;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .back-button:hover {
+            background-color: #1E2A5E;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 600px) {
+            .predict-container, .back-button {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about-us">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Large result display -->
+    <div class="result" id="result"></div>
+
+    <div class="predict-container">
+        <h1>Predict Investment Ability</h1>
+        <form id="predictForm" action="/can-invest" method="POST">
+            <button type="submit">Predict Investment</button>
+        </form>
+    </div>
+
+    <!-- Back to Dashboard button -->
+    <a href="/dashboard" class="back-button">Back to Dashboard</a>
+
+    <script>
+        const form = document.getElementById('predictForm');
+        const resultDiv = document.getElementById('result');
+
+        form.onsubmit = function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            fetch('/can-invest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                resultDiv.innerText = `Safe money you can invest: ${data.safeMoney}`;
+            })
+            .catch(error => {
+                resultDiv.innerText = 'Error predicting investment.';
+                console.error('Error:', error);
+            });
+        };
+    </script>
+</body>
+</html>

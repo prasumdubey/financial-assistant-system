@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login - Financial Decision Assistant</title>
+    <link rel="icon" type="image/jpeg" href="download.jpeg">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Navbar styles (adapted from the second file) */
+        nav {
+            background-color: #1E2A5E;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav li {
+            margin: 0 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Basic styling for the login page */
+        body {
+            background-color: #7C93C3;
+            font-family: 'times new roman', 'Arial Narrow', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding-top: 60px; /* Space for the fixed navbar */
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #1E2A5E;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .login-container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .login-container input[type="text"], 
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .login-container input[type="text"]:hover,
+        .login-container input[type="password"]:hover {
+            box-shadow: 0 0 10px #1E2A5E;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #1E2A5E;
+            border: 2px solid #1E2A5E;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .login-container button:hover {
+            background-color: #55679C;
+        }
+
+        .login-container .signup-link,
+        .login-container .change_password-link,
+        .login-container .home-link {
+            margin-top: 10px;
+            display: block;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .login-container .signup-link:hover,
+        .login-container .change_password-link:hover,
+        .login-container .home-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 600px) {
+            .login-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about-us">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Login Form -->
+    <div class="login-container">
+        <h1>Login Credentials</h1>
+        <form id="login-form" method="POST" action="/login">
+            <input type="text" id="email" name="email" placeholder="E-mail" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <a href="signup.html" class="signup-link">Don't have an account? Sign up</a>
+        <a href="forget_password.html" class="change_password-link">Forget Password?</a>
+    </div>
+
+</body>
+</html>

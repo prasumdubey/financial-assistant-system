@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard - Financial Decision Assistant</title>
+    <link rel="icon" type="image/jpeg" href="download.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic styling for the dashboard */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-image: url('yes2.avif'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensures the footer stays at the bottom */
+        }
+
+        nav {
+            background-color: #1E2A5E; /* Original color */
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed; /* Fixed position to stay at the top */
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            font-weight: bold
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-grow: 1; /* Allow the menu items to take available space */
+        }
+
+        nav li {
+            margin: 0 10px;
+            font-weight: bold;
+            position: relative; /* Position relative for dropdown */
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Dropdown menu styling */
+        .dropdown {
+            display: none; /* Hidden by default */
+            position: absolute; /* Absolute positioning for dropdown */
+            background-color: #1E2A5E; /* Match navbar color */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        nav li:hover .dropdown {
+            display: block; /* Show on hover */
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .dropdown a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .welcome-message {
+            padding: 15px;
+            text-align: center;
+            background-color: rgba(30, 42, 94, 0.8); /* Semi-transparent background */
+            color: white;
+            font-weight: bold;
+            font-size: 30px;
+            margin-top: 0; /* No margin above */
+            z-index: 999; /* Ensure it appears above other content */
+            position: sticky; /* Make it stick below the navbar */
+            top: 50px; /* Position directly below the navbar */
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            justify-content: center; /* Center cards */
+            margin-top: 20px; /* Space for the welcome message */
+            padding-top: 70px; /* Ensure space below fixed navbar */
+        }
+
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            border: 2px solid #7C93C3; /* Consistent border color */
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            transition: transform 0.3s, box-shadow 0.3s; /* Transition for hover effects */
+        }
+
+        .card:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            margin-bottom: 15px;
+            font-size: 20px;
+            color: #333; /* Darker color for better readability */
+        }
+
+        .card p {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .card button {
+            background-color: #1E2A5E;
+            color: white;
+            border: 2px solid rgb(0, 0, 0);
+            padding: 5px;
+            border-radius: 4px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s; /* Transition for hover effects */
+        }
+
+        .card button:hover {
+            background-color: #160894;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 600px) {
+            .container {
+                flex-direction: column;
+                align-items: center; /* Center cards on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li>
+                <a href="#">Options</a>
+                <div class="dropdown">
+                    <a href="/profile">Change Profile Details</a>
+                    <a href="/financial-details">Change Financial Details</a>
+                    <a href="/change-password">Change Password</a>
+                    <a href="/predict-investment">Predict Investment</a>
+                    <a href="/history">Track History</a>
+                </div>
+            </li>
+            <li><a href="/about-us">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+        <form id="logout" action="/logout" method="GET" style="margin: 0;">
+            <button type="submit" style="background: none; border: none; color: white; padding: 10px; cursor: pointer; font-size: 15px;
+    font-weight: bold;">Logout</button>
+        </form>
+    </nav>
+
+    <div class="welcome-message">
+        <span>Welcome, <%= user.first_name %>!</span> <!-- Dynamic Full Name -->
+    </div>
+
+    <div class="container">
+        <!-- Profile Settings -->
+        <div class="card" id="c1">
+            <h2>Profile Settings</h2>
+            <p>Manage, Update & Edit your personal information and profile details.</p>
+            <button onclick="window.location.href='/profile'">Edit Profile</button>
+        </div>
+
+        <!-- Change Password -->
+        <div class="card" id="c2">
+            <h2>Change Password</h2>
+            <p>Ensure your account is secure by changing your password regularly.</p>
+            <button onclick="window.location.href='/change-password'">Change Password</button>
+        </div>
+
+        <!-- Financial Details -->
+        <div class="card" id="c3">
+            <h2>Financial Details</h2>
+            <p>Update your financial information such as assets, income, spending, savings, and investments.</p>
+            <button onclick="window.location.href='/financial-details'">Manage Financial Info</button>
+        </div>
+
+        <!-- History Tracking -->
+        <div class="card" id="c4">
+            <h2>History Tracking</h2>
+            <p>Track your past financial decisions, transactions, and spending patterns.</p>
+            <button onclick="window.location.href='/history'">View History</button>
+        </div>
+
+        <!-- Predict Investment -->
+        <div class="card" id="c5">
+            <h2>Predict Investment</h2>
+            <p>Determine whether you can invest and find out the optimal amount for your investments.</p>
+            <button onclick="window.location.href='/predict-investment'">Predict Investment</button>
+        </div>
+    </div>
+</body>
+</html>

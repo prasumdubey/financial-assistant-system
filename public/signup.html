@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up - Financial Decision Assistant</title>
+    <link rel="icon" type="image/jpeg" href="download.jpeg">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Basic styling for the signup page */
+        nav {
+            background-color: #1E2A5E;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav li {
+            margin: 0 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        body {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            background-color: #7C93C3; /* Set background color */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Changed from center to flex-start to prevent hiding behind nav */
+            height: 100vh;
+            margin: 0;
+            padding-top: 60px; /* Added padding to avoid content hiding under navbar */
+        }
+
+        .signup-container {
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #1E2A5E;
+            width: 500px; /* Adjusted width for better horizontal layout */
+            text-align: center;
+            position: relative;
+        }
+
+        .signup-container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .signup-container input[type="text"], 
+        .signup-container input[type="email"], 
+        .signup-container input[type="password"], 
+        .signup-container select, 
+        .signup-container input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .signup-container input[type="text"]:hover, 
+        .signup-container input[type="email"]:hover, 
+        .signup-container input[type="password"]:hover, 
+        .signup-container select:hover, 
+        .signup-container input[type="number"]:hover {
+            box-shadow: 0 0 10px #1E2A5E;
+        }
+
+        .form-group-horizontal {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-group-horizontal input {
+            width: 48%;
+        }
+
+        .form-group-horizontal-three {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .form-group-horizontal-three input,
+        .form-group-horizontal-three select {
+            width: 48%; /* Two inputs will fill 100% together */
+        }
+
+        #country-code {
+            width: 30%;
+        }
+
+        #contact-number {
+            width: 68%;
+        }
+
+        .signup-container button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 2px solid black;
+            background-color: #1E2A5E;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .signup-container button:hover {
+            background-color: #55679C;
+        }
+
+        .signup-container .login-link {
+            margin-top: 10px;
+            display: block;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .signup-container .login-link:hover {
+            text-decoration: underline;
+        }
+
+        .home-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .home-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 600px) {
+            .signup-container {
+                width: 90%;
+            }
+
+            .form-group-horizontal {
+                flex-direction: column;
+            }
+
+            .form-group-horizontal input {
+                width: 100%;
+            }
+
+            .form-group-horizontal-three {
+                flex-direction: column;
+            }
+
+            .form-group-horizontal-three input,
+            .form-group-horizontal-three select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about-us">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Signup Form -->
+    <div class="signup-container">
+        <h1>Sign-Up Page</h1>
+        <form id="signup-form" method="POST" action="/signup" onsubmit="validateForm(event)">
+            <!-- Horizontal arrangement for First, and Last Name -->
+            <div class="form-group-horizontal-three">
+                <input type="text" id="first-name" name="first_name" placeholder="First Name" required>
+                <input type="text" id="last-name" name="last_name" placeholder="Last Name">
+            </div>
+
+            <!-- Country Code and Contact Number -->
+            <div class="form-group-horizontal">
+                <select id="isd-code" name="isd_code" required>
+                    <option value="">Country Code</option>
+                    <option value="91">+91</option>
+                    <option value="1">+1</option>
+                    <!-- Add more country codes as needed -->
+                </select>
+                <input type="text" id="contact" name="contact" placeholder="Contact Number" required>
+            </div>
+
+            <input type="email" id="email" name="email" placeholder="Email" required>
+
+            <!-- Added Age field -->
+            <input type="number" id="age" name="age" placeholder="Age" min="18" max="120" required>
+
+            <!-- Gender selection -->
+            <select id="gender" name="gender" required>
+                <option value="">Select your Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="prefer_not_to_say">Prefer not to tell</option>
+            </select>
+            
+            <!-- Security Questions -->
+            <select id="security-question" name="security_question">
+                <option value="">Select a Security Question (Optional)</option>
+                <option value="first_school">What was the name of your first school?</option>
+                <option value="favourite_pet">What was the name of your favourite pet?</option>
+                <option value="nickname">What is your nickname?</option>
+                <option value="favourite_teacher">Who was your favourite teacher?</option>
+            </select>
+            <input type="text" id="security-answer" name="security_answer" placeholder="Security Answer (Optional)">
+
+            <!-- Horizontal arrangement for Password and Confirm Password -->
+            <div class="form-group-horizontal">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm Password" required>
+            </div>
+            
+            <!-- Terms and Conditions -->
+            <div style="text-align: left; margin: 10px 0;">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">I agree to the <a href="#">terms and conditions</a></label>
+            </div>
+
+            <button type="submit">Sign Up</button>
+            <button type="reset">Reset</button>
+        </form>
+        <a href="login.html" class="login-link">Already have an account? Login</a>
+    </div>
+
+</body>
+</html>
