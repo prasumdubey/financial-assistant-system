@@ -22,38 +22,52 @@ An intelligent platform helps you manage your finances by analyzing your income,
 
            -- Create the users table
               CREATE TABLE `users` (
-              `id` int NOT NULL AUTO_INCREMENT,
-              `full_name` varchar(100) DEFAULT NULL,
-              `username` varchar(50) DEFAULT NULL,
-              `email` varchar(100) DEFAULT NULL,
-              `password` varchar(255) DEFAULT NULL,
-              PRIMARY KEY (`id`),
-              UNIQUE KEY `username` (`username`)
-              ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                 `email` varchar(100) NOT NULL,
+                 `first_name` varchar(50) DEFAULT NULL,
+                 `last_name` varchar(50) DEFAULT NULL,
+                 `age` int DEFAULT NULL,
+                 `gender` enum('Male','Female','Other') DEFAULT NULL,
+                 `isd_code` varchar(10) DEFAULT '+91',
+                 `contact` varchar(15) DEFAULT NULL,
+                 `security_question` varchar(255) DEFAULT NULL,
+                 `security_answer` varchar(255) DEFAULT NULL,
+                 `password` varchar(255) DEFAULT NULL,
+                 PRIMARY KEY (`email`)
+             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
            -- Create the financial_data table
               use financial_assistant;
-              CREATE TABLE financial_data (
-                  id INT AUTO_INCREMENT PRIMARY KEY,
-                  user_id INT,
-                  income DECIMAL(10, 2),
-                  expenses DECIMAL(10, 2),
-                  savings DECIMAL(10, 2),
-                  investment DECIMAL(10, 2),
-                  property_valueproperty_value DECIMAL(10, 2),
-                  FOREIGN KEY (user_id) REFERENCES users(id) -- assuming you have a users table
-              );
+              CREATE TABLE `financial_info` (
+                 `id` int NOT NULL AUTO_INCREMENT,
+                 `email` varchar(100) NOT NULL,
+                 `total_assets` decimal(15,2) DEFAULT '0.00',
+                 `total_liabilities` decimal(15,2) DEFAULT '0.00',
+                 `income` decimal(15,2) DEFAULT '0.00',
+                 `expenses` decimal(15,2) DEFAULT '0.00',
+                 `debt` decimal(15,2) DEFAULT '0.00',
+                 `savings` decimal(15,2) DEFAULT '0.00',
+                 `profit` decimal(15,2) DEFAULT NULL,
+                 PRIMARY KEY (`id`),
+                 KEY `email` (`email`),
+                 CONSTRAINT `financial_info_ibfk_1` FOREIGN KEY (`email`) REFERENCES `users` (`email`) ON DELETE CASCADE
+             ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
               
             -- Create the transactions table
-              CREATE TABLE transactions (
-                  id INT AUTO_INCREMENT PRIMARY KEY,
-                  user_id INT,
-                  amount DECIMAL(10, 2),
-                  date DATETIME,
-                  transaction_type ENUM('income', 'expense', 'investment'),
-                  description VARCHAR(255),
-                  FOREIGN KEY (user_id) REFERENCES users(id)
-              );
+              CREATE TABLE `history` (
+                 `id` int NOT NULL AUTO_INCREMENT,
+                 `email` varchar(100) NOT NULL,
+                 `action` varchar(255) NOT NULL,
+                 `amount` decimal(15,2) NOT NULL,
+                 `profit_loss` decimal(15,2) NOT NULL,
+                 `remaining_balance` decimal(15,2) NOT NULL,
+                 `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+                 PRIMARY KEY (`id`),
+                 KEY `email` (`email`),
+                 CONSTRAINT `history_ibfk_1` FOREIGN KEY (`email`) REFERENCES `users` (`email`) ON DELETE CASCADE
+             ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
         2. Setup Connection of database with the application : 
                 const db = mysql.createConnection({
