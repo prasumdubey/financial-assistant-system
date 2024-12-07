@@ -11,7 +11,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_absolute_error
 from scipy.stats import randint
 
-df=pd.read_csv("C:/Users/Prashant dubey/Desktop/data.csv")
+df=pd.read_csv("data.csv")
 columns_to_merge = [37, 38, 44, 45, 48, 49, 55, 66, 73, 78, 79, 83, 87, 90]
 income= df.iloc[:, columns_to_merge].mean(axis=1)
 
