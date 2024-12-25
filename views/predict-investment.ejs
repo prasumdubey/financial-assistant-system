@@ -6,12 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Predict Investment - Financial Decision Assistant</title>
     <link rel="icon" type="image/jpeg" href="download.jpeg">
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* Navbar styles */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-image: url('yes2.avif'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
         nav {
             background-color: #1E2A5E;
-            padding: 10px;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -20,6 +33,7 @@
             left: 0;
             right: 0;
             z-index: 1000;
+            font-weight: bold;
         }
 
         nav ul {
@@ -30,7 +44,9 @@
         }
 
         nav li {
-            margin: 0 10px;
+            margin: 0 20px;
+            font-weight: bold;
+            position: relative;
         }
 
         nav a {
@@ -43,82 +59,145 @@
             text-decoration: underline;
         }
 
-        /* Basic styling for the prediction page */
-        body {
-            background-color: #7C93C3;
-            font-family: 'times new roman', 'Arial Narrow', Arial, sans-serif;
+
+        .welcome-message {
+            width: 100%;
+            padding: 23px;
+            text-align: center;
+            background-color: rgb(69, 80, 128);
+            color: white;
+            font-weight: bold;
+            font-size: 30px;
+            margin-top: 50px; /* Ensure spacing accounts for fixed navbar height */
+            position: sticky;
+            top: 50px; /* Offset relative to the navbar */
+            z-index: 999;
+        }
+
+        .container {
+            display: flex;
+            flex-grow: 1;
+        }
+
+        .left-section {
+            flex: 0 0 40%;
+            padding: 20px;
+            background-color: #f7f7f7;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            padding-top: 60px; /* Space for the fixed navbar */
+        }
+
+        .right-section {
+            flex: 0 0 60%;
+            padding: 20px;
+            color:rgb(9, 70, 83);
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .left-section h2{
+            color:rgb(9, 70, 83);
         }
 
         /* Result styling */
         .result {
-            font-size: 36px;
+            font-size: 28px;
             font-weight: bold;
-            color: #1E2A5E;
+            color:rgb(9, 70, 83);
             text-align: center;
             margin-bottom: 20px;
         }
 
-        .predict-container {
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 20px;
+        .result:hover{
+            transform: scale(1.05);
+            background-color: rgb(69, 80, 128);;
+            color:white;
+            border:2px solid black;
             border-radius: 8px;
-            border: 1px solid #1E2A5E;
+            padding:10px;
+        }
+
+        .predict-container {
+            background-color: #1E2A5E;
+            color:white;
+            margin-top:20px;
+            padding: 20px;
+            border-radius: 12px;
+            border: 3px solid black;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 80%;
             text-align: center;
+        }
+
+        .predict-container:hover{
+            transform: scale(1.05);
+            background-color: rgb(69, 80, 128);;
         }
 
         .predict-container h1 {
             margin-bottom: 20px;
-            font-size: 24px;
-            color: #333;
+            font-size: 20px;
+            color: white;
         }
 
         .predict-container button {
-            width: 100%;
+            width: 50%;
             padding: 10px;
             margin-top: 10px;
-            background-color: #1E2A5E;
-            border: 2px solid #1E2A5E;
-            color: white;
+            background-color: white;
+            border: 2px solid black;
+            color: #1E2A5E;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            font-weight: bolder;
         }
 
         .predict-container button:hover {
-            background-color: #55679C;
+            background-color: rgb(179, 187, 197);
         }
 
-        /* Back to Dashboard button */
-        .back-button {
-            width: 300px;
-            padding: 10px;
-            margin-top: 10px;
-            background-color: #55679C;
-            border: 2px solid #1E2A5E;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            text-align: center;
+        /* Spinner styles */
+        .spinner {
+            display: none;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #1E2A5E;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
         }
 
-        .back-button:hover {
-            background-color: #1E2A5E;
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Chart container */
+        .chart-container {
+            width: 90%;
+            max-width: 700px;
         }
 
         /* Responsive styling */
-        @media (max-width: 600px) {
-            .predict-container, .back-button {
-                width: 90%;
+        @media (max-width: 800px) {
+            body {
+                flex-direction: column;
+            }
+
+            .left-section, .right-section {
+                flex: 1 1 auto;
+                width: 100%;
             }
         }
     </style>
@@ -127,45 +206,171 @@
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/about-us">About Us</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
         </ul>
     </nav>
 
-    <!-- Large result display -->
-    <div class="result" id="result"></div>
-
-    <div class="predict-container">
-        <h1>Predict Investment Ability</h1>
-        <form id="predictForm" action="/can-invest" method="POST">
-            <button type="submit">Predict Investment</button>
-        </form>
+    <div class="welcome-message">
+        <span>Hey <%= user.first_name %>, Now you can Predict your Investment Score here!</span> <!-- Dynamic Full Name -->
     </div>
 
-    <!-- Back to Dashboard button -->
-    <a href="/dashboard" class="back-button">Back to Dashboard</a>
+    <div class="container">
+        <!-- Left Section -->
+        <div class="left-section">
+            <h2>Make Predictions</h2>
+            <div class="result" id="result"></div>
+            <div class="predict-container">
+                <h1>Predict Investment Ability</h1>
+                <form id="predictForm" action="/can-invest" method="POST">
+                    <div class="spinner" id="spinner"></div>
+                    <button type="submit">Predict Investment</button>
+                </form>
+                <button type="button" onclick="window.location.href='/dashboard'">Back to Dashboard</button>
+            </div>
+        </div>
+
+        <!-- Right Section -->
+        <div class="right-section">
+            <h2>Graph Showing Investment-Score</h2>
+            <div class="chart-container">
+                <canvas id="investmentChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
 
     <script>
         const form = document.getElementById('predictForm');
         const resultDiv = document.getElementById('result');
+        const spinner = document.getElementById('spinner');
+        const ctx = document.getElementById('investmentChart').getContext('2d');
 
-        form.onsubmit = function(event) {
+        const investmentChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [], // Time steps
+                datasets: [
+                    {
+                        label: 'Safe Money to Invest',
+                        data: [], // Incremental values
+                        borderColor: '#1E2A5E',
+                        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                        fill: true,
+                        tension: 0.4,
+                        font: {
+                            weight: 'bold',
+                            size: 16 // Adjust the size as needed
+                        }
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Increment',
+                            color: '#1E2A5E',
+                            font: {
+                                weight: 'bold',
+                                size: 16 // Adjust the size as needed
+                            }
+                        },
+                        ticks: {
+                            color: '#1E2A5E',
+                            font: {
+                                weight: 'bold',
+                                size: 14 // Adjust the size as needed
+                            }
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Amount',
+                            color: '#1E2A5E',
+                            font: {
+                                weight: 'bold',
+                                size: 16 // Adjust the size as needed
+                            }
+                        },
+                        ticks: {
+                            color: '#1E2A5E',
+                            font: {
+                                weight: 'bold',
+                                size: 14 // Adjust the size as needed
+                            }
+                        },
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#1E2A5E'
+                        }
+                    }
+                }
+            }
+        });
+
+        form.onsubmit = function (event) {
             event.preventDefault(); // Prevent form submission
 
-            fetch('/can-invest', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                resultDiv.innerText = `Safe money you can invest: ${data.safeMoney}`;
-            })
-            .catch(error => {
-                resultDiv.innerText = 'Error predicting investment.';
-                console.error('Error:', error);
-            });
+            resultDiv.innerText = ''; // Clear previous results
+            spinner.style.display = 'block'; // Show loading spinner
+
+            setTimeout(() => {
+                fetch('/can-invest', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        spinner.style.display = 'none'; // Hide spinner
+
+                        if (data.safeMoney <= 0) {
+                            resultDiv.innerText = 'You cannot invest as your score is negative or zero.';
+                        } else {
+                            const endValue = data.safeMoney;
+                            const steps = 10;
+                            const stepValue = Math.ceil(endValue / steps); // Value to increment per step
+                            const stepDuration = 3000 / steps; // Duration for each step
+                            let currentValue = 0;
+                            let stepCount = 0;
+
+                            investmentChart.data.labels = []; // Clear previous labels
+                            investmentChart.data.datasets[0].data = []; // Clear previous data
+
+                            const counter = setInterval(() => {
+                                if (stepCount >= steps) {
+                                    currentValue = endValue; // Ensure exact final value
+                                    clearInterval(counter);
+                                } else {
+                                    currentValue += stepValue;
+                                    stepCount++;
+                                    // Avoid overshooting the final value
+                                    if (currentValue > endValue) currentValue = endValue;
+                                }
+
+                                resultDiv.innerText = `Safe money you can invest: ${currentValue}`;
+
+                                // Update chart
+                                investmentChart.data.labels.push(`Step ${stepCount}`);
+                                investmentChart.data.datasets[0].data.push(currentValue);
+                                investmentChart.update();
+                            }, stepDuration);
+                        }
+                    })
+                    .catch(error => {
+                        spinner.style.display = 'none'; // Hide spinner
+                        resultDiv.innerText = 'Error predicting investment.';
+                        console.error('Error:', error);
+                    });
+            }, 2000); // Simulate 2 seconds delay
         };
     </script>
 </body>

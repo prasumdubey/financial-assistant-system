@@ -103,6 +103,9 @@ best_model = random_search.best_estimator_
 
 # Make predictions on the test data
 y_pred2 = best_model.predict(X_test2)
+new_pred= best_model.predict([[20000,4500,1235,8902,9875,3890,9074]])
+for x in new_pred:
+    print(x)
 
 pickle.dump(model1,open('train_model1.pkl','wb'))
 pickle.dump(best_model,open('train_model2.pkl','wb'))

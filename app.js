@@ -277,6 +277,24 @@ app.get('/dashboard', isAuthenticated, (req, res) => {
     res.render('dashboard', { user: user });
 });
 
+app.get('/api/user-data', (req, res) => {
+    const query = 'SELECT * FROM financial_info WHERE email = ?';
+    if (!req.session || !req.session.email) {
+        return res.status(401).send('User not authenticated');
+    }
+    db.query(query, [req.session.email], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Server error');
+        } else if (result.length === 0) {
+            res.status(404).send('User not found');
+        } else {
+            res.json(result[0]); // Send only the first result
+        }
+    });
+});
+
+
 // GET and POST routes for profile settings (protected)
 app.get('/profile', isAuthenticated, (req, res) => {
     const query = 'SELECT * FROM users WHERE email = ?';
@@ -290,6 +308,7 @@ app.get('/profile', isAuthenticated, (req, res) => {
         res.render('profile', { user });
     });
 });
+
 
 app.post('/edit-profile', isAuthenticated, (req, res) => {
     const { 
@@ -433,7 +452,8 @@ app.post('/financial-details', isAuthenticated, (req, res) => {
 
 // Route to render the predict investment page
 app.get('/predict-investment', isAuthenticated, (req, res) => {
-    res.render('predict-investment');
+    const user = req.session.user || { full_name: "Guest" };
+    res.render('predict-investment', { user: user });
 });
 app.post('/can-invest', isAuthenticated, (req, res) => {
     const query = 'SELECT income, total_assets, expenses, debt, total_liabilities, savings, profit FROM financial_info WHERE email = ?';
