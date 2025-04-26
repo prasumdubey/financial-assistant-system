@@ -6,6 +6,7 @@ const session = require('express-session');
 const path = require('path');
 const dotenv = require('dotenv');
 const fs = require('fs');
+const cors = require("cors");
 
 
 // Load environment variables from .env file
@@ -277,6 +278,24 @@ app.get('/dashboard', isAuthenticated, (req, res) => {
     res.render('dashboard', { user: user });
 });
 
+app.get('/api/user-data', (req, res) => {
+    const query = 'SELECT * FROM financial_info WHERE email = ?';
+    if (!req.session || !req.session.email) {
+        return res.status(401).send('User not authenticated');
+    }
+    db.query(query, [req.session.email], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Server error');
+        } else if (result.length === 0) {
+            res.status(404).send('User not found');
+        } else {
+            res.json(result[0]); // Send only the first result
+        }
+    });
+});
+
+
 // GET and POST routes for profile settings (protected)
 app.get('/profile', isAuthenticated, (req, res) => {
     const query = 'SELECT * FROM users WHERE email = ?';
@@ -290,6 +309,7 @@ app.get('/profile', isAuthenticated, (req, res) => {
         res.render('profile', { user });
     });
 });
+
 
 app.post('/edit-profile', isAuthenticated, (req, res) => {
     const { 
@@ -431,13 +451,62 @@ app.post('/financial-details', isAuthenticated, (req, res) => {
     });
 });
 
+const API_KEY = 'AIzaSyCT-RSebpbgiL4lRQ7QNoBD437hrTNBK-E';  // ensure the API key is correct
+
+app.use(cors());
+app.use(express.json());
+
+app.post("/chat", async (req, res) => {
+  try {
+    const userMessage = req.body.message;
+
+    // API call to Google's Generative AI endpoint
+    const response = await axios.post(
+      `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
+      {
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: userMessage }],
+          },
+        ],
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    // Extract the reply from the response
+    const reply = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    res.json({ reply: reply || "Hmm, I didn’t get that. Could you try rephrasing?" });
+
+  } catch (error) {
+    console.error("Backend Gemini Error:", error?.response?.data || error.message);
+    res.json({ reply: "I'm experiencing some issues. Please try again shortly!" });
+  }
+});
+
 // Route to render the predict investment page
 app.get('/predict-investment', isAuthenticated, (req, res) => {
-    res.render('predict-investment');
+    const user = req.session.user || { full_name: "Guest" };
+    res.render('predict-investment', { user: user });
 });
 app.post('/can-invest', isAuthenticated, (req, res) => {
-    const query = 'SELECT income, total_assets, expenses, debt, total_liabilities, savings, profit FROM financial_info WHERE email = ?';
-    
+    const query = `
+        SELECT 
+            fi.income, fi.total_assets, fi.expenses, fi.debt,
+            fi.total_liabilities, fi.savings, fi.profit,
+            u.age
+        FROM 
+            financial_info fi
+        JOIN 
+            users u ON fi.email = u.email
+        WHERE 
+            fi.email = ?
+    `;
+
     db.query(query, [req.session.email], (err, results) => {
         if (err) {
             console.error('Error fetching financial data:', err);
@@ -448,19 +517,25 @@ app.post('/can-invest', isAuthenticated, (req, res) => {
             return res.status(404).send('No financial data found.');
         }
 
-        const financialData = results[0];
+        const data = results[0];
 
-        // Calculate the safe money based on the formula
+        // Normalize age to affect safeMoney: younger users may be encouraged to invest more
+        let ageFactor = 1;
+        if (data.age < 30) ageFactor = 1.1; // boost for younger users
+        else if (data.age >= 30 && data.age <= 50) ageFactor = 1.0;
+        else ageFactor = 0.9; // reduce for older users nearing retirement
+
+        // Apply feature if you want it to positively influence safeMoney (custom weight: 0.3)
         const safeMoney = (
-            0.5 * (parseFloat(financialData.income) - parseFloat(financialData.expenses)) +
-            0.2 * parseFloat(financialData.total_assets) -
-            0.7 * parseFloat(financialData.debt) -
-            0.6 * parseFloat(financialData.total_liabilities) +
-            0.4 * parseFloat(financialData.savings) +
-            0.5 * parseFloat(financialData.profit)
-        );
+            0.5 * (parseFloat(data.income) - parseFloat(data.expenses)) +
+            0.2 * parseFloat(data.total_assets) -
+            0.7 * parseFloat(data.debt) -
+            0.6 * parseFloat(data.total_liabilities) +
+            0.4 * parseFloat(data.savings) +
+            0.5 * parseFloat(data.profit)
+        ) * ageFactor;
 
-        res.json({ safeMoney: safeMoney.toFixed(2) }); // Return the result as JSON
+        res.json({ safeMoney: safeMoney.toFixed(2) });
     });
 });
 

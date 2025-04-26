@@ -19,21 +19,21 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Ensures the footer stays at the bottom */
+            min-height: 100vh;
         }
 
         nav {
-            background-color: #1E2A5E; /* Original color */
+            background-color: #1E2A5E;
             padding: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: fixed; /* Fixed position to stay at the top */
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            font-weight: bold
+            font-weight: bold;
         }
 
         nav ul {
@@ -41,13 +41,12 @@
             margin: 0;
             padding: 0;
             display: flex;
-            flex-grow: 1; /* Allow the menu items to take available space */
         }
 
         nav li {
-            margin: 0 10px;
+            margin: 0 20px;
             font-weight: bold;
-            position: relative; /* Position relative for dropdown */
+            position: relative;
         }
 
         nav a {
@@ -60,17 +59,16 @@
             text-decoration: underline;
         }
 
-        /* Dropdown menu styling */
         .dropdown {
-            display: none; /* Hidden by default */
-            position: absolute; /* Absolute positioning for dropdown */
-            background-color: #1E2A5E; /* Match navbar color */
+            display: none;
+            position: absolute;
+            background-color: #1E2A5E;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             z-index: 1000;
         }
 
         nav li:hover .dropdown {
-            display: block; /* Show on hover */
+            display: block;
         }
 
         .dropdown a {
@@ -87,74 +85,122 @@
         .welcome-message {
             padding: 15px;
             text-align: center;
-            background-color: rgba(30, 42, 94, 0.8); /* Semi-transparent background */
+            background-color: rgb(69, 80, 128);
             color: white;
             font-weight: bold;
             font-size: 30px;
-            margin-top: 0; /* No margin above */
-            z-index: 999; /* Ensure it appears above other content */
-            position: sticky; /* Make it stick below the navbar */
-            top: 50px; /* Position directly below the navbar */
+            margin-top: 0;
+            position: sticky;
+            top: 50px;
+            z-index: 999;
         }
 
         .container {
             display: flex;
-            flex-wrap: wrap;
-            padding: 20px;
-            justify-content: center; /* Center cards */
-            margin-top: 20px; /* Space for the welcome message */
-            padding-top: 70px; /* Ensure space below fixed navbar */
+            justify-content: space-between;
+            margin-top: 20px;
+            padding: 70px 10px 20px;
+            gap: 20px; /* Space between sections */
         }
 
-        .card {
+        .left-section, .right-section {
+            width: 25%;
             background-color: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 10px;
-            border: 2px solid #7C93C3; /* Consistent border color */
-            flex: 1;
-            min-width: 300px;
-            max-width: 400px;
-            transition: transform 0.3s, box-shadow 0.3s; /* Transition for hover effects */
         }
 
-        .card:hover {
-            transform: translateY(-5px); /* Lift effect on hover */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        .center-section {
+            flex-grow: 1;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: top;
+        }
+
+        #center-card{
+            background-color: white;
+            color:black;
+        }
+
+        #center-card h2{
+            color:black;
+        }
+
+        #center-card:hover{
+            transform: none;
+        }
+
+        #pred-button{
+            margin-top:20px;
+            font-weight: bolder;
+            margin-left:37%;
+            align-items: center;
+            width:200px;
+            background-color: #1E2A5E;
+            color:white;
+        }
+        #pred-button:hover {
+            background-color: white;
+            color:black;
+        }
+
+        .card {
+            background-color: #1E2A5E;
+            color:white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            border: 3px solid black;
         }
 
         .card h2 {
             margin-bottom: 15px;
             font-size: 20px;
-            color: #333; /* Darker color for better readability */
+            color: white;
         }
 
         .card p {
             margin: 10px 0;
-            color: #666;
+            color: white;
+        }
+
+        .card:hover{
+            transform: scale(1.05);
+            background-color: rgb(69, 80, 128);;
         }
 
         .card button {
-            background-color: #1E2A5E;
-            color: white;
+            font-weight: bolder;
+            background-color: white;
+            color: #1E2A5E;
             border: 2px solid rgb(0, 0, 0);
-            padding: 5px;
+            padding: 10px;
             border-radius: 4px;
-            width: 100%;
+            width: 50%;
             cursor: pointer;
-            transition: background-color 0.3s; /* Transition for hover effects */
+            transition: background-color 0.3s;
+            margin-left:21%;
         }
 
         .card button:hover {
-            background-color: #160894;
+            background-color: rgb(179, 187, 197);
         }
 
-        /* Responsive styling */
-        @media (max-width: 600px) {
+        @media (max-width: 900px) {
             .container {
                 flex-direction: column;
-                align-items: center; /* Center cards on smaller screens */
+                align-items: center;
+                gap: 10px;
+            }
+
+            .left-section, .center-section, .right-section {
+                width: 100%;
             }
         }
     </style>
@@ -173,54 +219,319 @@
                     <a href="/history">Track History</a>
                 </div>
             </li>
-            <li><a href="/about-us">About Us</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
         </ul>
-        <form id="logout" action="/logout" method="GET" style="margin: 0;">
+        <form id="logout" action="/logout" method="GET" style="margin: 0;" onsubmit="return confirm('Are you sure you want to Logout ?')">
             <button type="submit" style="background: none; border: none; color: white; padding: 10px; cursor: pointer; font-size: 15px;
     font-weight: bold;">Logout</button>
         </form>
     </nav>
 
     <div class="welcome-message">
-        <span>Welcome, <%= user.first_name %>!</span> <!-- Dynamic Full Name -->
+        <span>Welcome, <%= user.first_name + ' ' + user.last_name %></span> <!-- Dynamic Full Name -->
     </div>
 
     <div class="container">
-        <!-- Profile Settings -->
-        <div class="card" id="c1">
-            <h2>Profile Settings</h2>
-            <p>Manage, Update & Edit your personal information and profile details.</p>
-            <button onclick="window.location.href='/profile'">Edit Profile</button>
+        <div class="left-section">
+            <div class="card">
+                <h2>Current Income</h2>
+                <p id="income"></p>
+                <button onclick="showAlert(1)">View Income</button>
+            </div>
+            <div class="card">
+                <h2>Current Assets</h2>
+                <p id="assets"></p>
+                <button onclick="showAlert(2)">View Assets</button>
+            </div>
+            <div class="card">
+                <h2>Current Expenses</h2>
+                <p id="expenses"></p>
+                <button onclick="showAlert(3)">View Expenses</button>
+            </div>
+            <div class="card">
+                <h2>Current Liabilities</h2>
+                <p id="liabilities"></p>
+                <button onclick="showAlert(4)">View Liabilities</button>
+            </div>
         </div>
-
-        <!-- Change Password -->
-        <div class="card" id="c2">
-            <h2>Change Password</h2>
-            <p>Ensure your account is secure by changing your password regularly.</p>
-            <button onclick="window.location.href='/change-password'">Change Password</button>
+        <div class="center-section">
+            <div class="card" id="center-card">
+                <h2><center>Financial Overview</center></h2>
+                <canvas id="overviewChart" width="700" height="600"></canvas>
+                <button id="pred-button" onclick="window.location.href='/predict-investment'">Predict Investment</button>
+            </div>
         </div>
-
-        <!-- Financial Details -->
-        <div class="card" id="c3">
-            <h2>Financial Details</h2>
-            <p>Update your financial information such as assets, income, spending, savings, and investments.</p>
-            <button onclick="window.location.href='/financial-details'">Manage Financial Info</button>
-        </div>
-
-        <!-- History Tracking -->
-        <div class="card" id="c4">
-            <h2>History Tracking</h2>
-            <p>Track your past financial decisions, transactions, and spending patterns.</p>
-            <button onclick="window.location.href='/history'">View History</button>
-        </div>
-
-        <!-- Predict Investment -->
-        <div class="card" id="c5">
-            <h2>Predict Investment</h2>
-            <p>Determine whether you can invest and find out the optimal amount for your investments.</p>
-            <button onclick="window.location.href='/predict-investment'">Predict Investment</button>
+        <div class="right-section">
+            <div class="card">
+                <h2>Current Savings</h2>
+                <p id="savings"></p>
+                <button onclick="showAlert(5)">View Savings</button>
+            </div>
+            <div class="card">
+                <h2>Current Profit</h2>
+                <p id="profit"></p>
+                <button onclick="showAlert(6)">View Profit</button>
+            </div>
+            <div class="card">
+                <h2>Current Debt</h2>
+                <p id="debt"></p>
+                <button onclick="showAlert(7)">View Debt</button>
+            </div>
+            <div class="card" id="c8">
+                <h2>History Tracking</h2>
+                <p>Track your past financial decisions, transactions, and spending patterns.</p>
+                <button onclick="window.location.href='/history'">View History</button>
+            </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Move data to global scope
+        let userData = {};
+    
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Fetch user data from the server
+                const response = await fetch('/api/user-data');
+                userData = await response.json();
+    
+                // Update card content with user data
+                document.getElementById('income').innerHTML = `The Actual Income that user is earning annually from all the different sources are : <b>Rs.${userData.income || 0}</b>`;
+                document.getElementById('assets').innerHTML = `Value of all the different assets user currently holds is : <b>Rs.${userData.total_assets || 0}</b>`;
+                document.getElementById('expenses').innerHTML = `An average amount of money user usually spends on all kinds of expenditures annually is : <b>Rs.${userData.expenses || 0}</b>`;
+                document.getElementById('liabilities').innerHTML = `Current liabilities of the user annually are : <b>Rs.${userData.total_liabilities || 0}</b>`;
+                document.getElementById('savings').innerHTML = `An average amount of money user is able to save annually is : <b>Rs.${userData.savings || 0}</b>`;
+                document.getElementById('profit').innerHTML = `The amount of profit user made from all different holdings, including assets, stocks, trades, etc. is : <b>Rs.${userData.profit || 0}</b>`;
+                document.getElementById('debt').innerHTML = `The amount of debt that the user currently has, including loans, debt from friends & relatives, etc., is : <b>Rs.${userData.debt || 0}</b>`;
+    
+                // Create a financial overview chart
+                const ctx = document.getElementById('overviewChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Income', 'Assets', 'Expenses', 'Debt', 'Liabilities', 'Profit', 'Savings'],
+                        datasets: [{
+                            label: 'Current Status',
+                            data: [
+                                userData.income,
+                                userData.total_assets,
+                                userData.expenses,
+                                userData.debt,
+                                userData.total_liabilities,
+                                userData.profit,
+                                userData.savings
+                            ],
+                            backgroundColor: [
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(235, 200, 178, 1)',
+                                'rgba(144, 189, 138, 1)',
+                                'rgba(190, 206, 39,1)'
+                            ],
+                            borderWidth: 1.5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { position: 'top' }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        });
+    
+        function showAlert(value) {
+            if(value===1){
+                alert(`Total Income that user earn anually : Rs.${userData.income}`);
+            }
+            else if(value===2){
+                alert(`Total Value of Assets user hold : Rs.${userData.total_assets}`);
+            }
+            else if(value===3){
+                alert(`Total spending user done anually : Rs.${userData.expenses}`);
+            }
+            else if(value===4){
+                alert(`Current value of user's Liabilities : Rs.${userData.total_liabilities}`);
+            }
+            else if(value===5){
+                alert(`An avg amount of money user saves anually : Rs.${userData.savings}`);
+            }
+            else if(value===6){
+                alert(`Amount of Profit user generates anually : Rs.${userData.profit}`);
+            }
+            else if(value===7){
+                alert(`Current Debt of the user : Rs.${userData.debt}`);
+            }
+            
+        }
+    </script>   
+    <!-- Floating Chatbot Button -->
+    <button id="chatbotToggle" class="chatbot-btn">💬</button>
+
+    <!-- Chatbot Popup Container -->
+    <div id="chatbotContainer" class="chatbot-container hidden">
+    <div class="chatbot-header">
+        <span>Ask Fusec</span>
+        <button id="closeChatbot">✖</button>
+    </div>
+    <div id="chatHistory" class="chatbot-history"></div>
+    <div class="chatbot-input-container">
+        <input type="text" id="chatInput" placeholder="Type your message..." />
+        <button id="sendMessage">➤</button>
+    </div>
+    </div>
+
+    <!-- Styles -->
+    <style>
+    .chatbot-btn {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        background-color: #3f51b5;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .chatbot-container {
+        position: fixed;
+        bottom: 100px;
+        right: 25px;
+        width: 350px;
+        max-height: 500px;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 1000;
+    }
+
+    .chatbot-header {
+        background-color: #3f51b5;
+        color: white;
+        padding: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .chatbot-history {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        font-family: sans-serif;
+        font-size: 14px;
+    }
+
+    .chatbot-input-container {
+        display: flex;
+        border-top: 1px solid #ccc;
+        padding: 10px;
+    }
+
+    .chatbot-input-container input {
+        flex: 1;
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+    }
+
+    .chatbot-input-container button {
+        margin-left: 10px;
+        background-color: #3f51b5;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .user-message {
+        text-align: right;
+        color: #3f51b5;
+        margin-bottom: 5px;
+    }
+
+    .bot-message {
+        text-align: left;
+        color: #333;
+        margin-bottom: 5px;
+    }
+    </style>
+
+    <!-- JavaScript -->
+    <script>
+        const chatbotToggle = document.getElementById("chatbotToggle");
+        const chatbotContainer = document.getElementById("chatbotContainer");
+        const closeChatbot = document.getElementById("closeChatbot");
+        const sendMessage = document.getElementById("sendMessage");
+        const chatInput = document.getElementById("chatInput");
+        const chatHistory = document.getElementById("chatHistory");
+        
+        chatbotToggle.addEventListener("click", () => {
+            chatbotContainer.classList.toggle("hidden");
+        });
+        
+        closeChatbot.addEventListener("click", () => {
+            chatbotContainer.classList.add("hidden");
+        });
+        
+        sendMessage.addEventListener("click", async () => {
+            const message = chatInput.value.trim();
+            if (!message) return;
+        
+            chatHistory.innerHTML += `<div class="user-message">${message}</div>`;
+            chatInput.value = "";
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        
+            try {
+                const response = await fetch("http://localhost:3001/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message })
+                });
+        
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+        
+                const data = await response.json();
+                const reply = data.reply || "I'm still learning! Try rephrasing your question.";
+        
+                chatHistory.innerHTML += `<div class="bot-message">${reply}</div>`;
+            } catch (error) {
+                console.error("Chatbot Error:", error);
+                chatHistory.innerHTML += `<div class="bot-message">Hmm, I couldn’t get a reply. Please try again later.</div>`;
+            }
+        
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        });
+        
+        // Enter key to send
+        chatInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") sendMessage.click();
+        });
+        </script>
+        
+ 
 </body>
 </html>

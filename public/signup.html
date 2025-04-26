@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign Up - Financial Decision Assistant</title>
     <link rel="icon" type="image/jpeg" href="download.jpeg">
-    <link rel="stylesheet" href="styles.css">
     <style>
         /* Basic styling for the signup page */
         nav {
@@ -44,14 +43,18 @@
         }
 
         body {
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            background-color: #7C93C3; /* Set background color */
+            background-color: #7C93C3;
+            background-image: url('hello2.png');
+            background-size: cover; /* Ensures the background image covers the whole screen */
+            background-position: center; /* Center the background image */
+            background-attachment: fixed;
+            font-family: 'times new roman', 'Arial Narrow', Arial, sans-serif;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Changed from center to flex-start to prevent hiding behind nav */
+            align-items: center;
             height: 100vh;
             margin: 0;
-            padding-top: 60px; /* Added padding to avoid content hiding under navbar */
+            padding-top: 60px; /* Space for the fixed navbar */
         }
 
         .signup-container {
@@ -191,8 +194,8 @@
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/about-us">About Us</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
         </ul>
     </nav>
 
