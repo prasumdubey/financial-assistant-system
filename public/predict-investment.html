@@ -331,6 +331,7 @@
                     .then(response => response.json())
                     .then(data => {
                         spinner.style.display = 'none'; // Hide spinner
+<<<<<<< HEAD
                     
                         const suggestionsDiv = document.getElementById('result');
                     
@@ -370,23 +371,55 @@
                             const counter = setInterval(() => {
                                 if (stepCount >= steps) {
                                     currentValue = endValue;
+=======
+
+                        if (data.safeMoney <= 0) {
+                            resultDiv.innerText = 'You cannot invest as your score is negative or zero.';
+                        } else {
+                            const endValue = data.safeMoney;
+                            const steps = 10;
+                            const stepValue = Math.ceil(endValue / steps); // Value to increment per step
+                            const stepDuration = 3000 / steps; // Duration for each step
+                            let currentValue = 0;
+                            let stepCount = 0;
+
+                            investmentChart.data.labels = []; // Clear previous labels
+                            investmentChart.data.datasets[0].data = []; // Clear previous data
+
+                            const counter = setInterval(() => {
+                                if (stepCount >= steps) {
+                                    currentValue = endValue; // Ensure exact final value
+>>>>>>> 402b59f8faac3b45c2a0e7b31933c1cbec434831
                                     clearInterval(counter);
                                 } else {
                                     currentValue += stepValue;
                                     stepCount++;
+<<<<<<< HEAD
                                     if (currentValue > endValue) currentValue = endValue;
                                 }
                     
                                 resultDiv.innerHTML = `Safe money you can invest: ₹${currentValue} <br>💡 <b>Based on your score, you may invest in:</b> <br>✅ ${suggestions.join(', ')}`;
                                 
                     
+=======
+                                    // Avoid overshooting the final value
+                                    if (currentValue > endValue) currentValue = endValue;
+                                }
+
+                                resultDiv.innerText = `Safe money you can invest: ${currentValue}`;
+
+                                // Update chart
+>>>>>>> 402b59f8faac3b45c2a0e7b31933c1cbec434831
                                 investmentChart.data.labels.push(`Step ${stepCount}`);
                                 investmentChart.data.datasets[0].data.push(currentValue);
                                 investmentChart.update();
                             }, stepDuration);
                         }
                     })
+<<<<<<< HEAD
                     
+=======
+>>>>>>> 402b59f8faac3b45c2a0e7b31933c1cbec434831
                     .catch(error => {
                         spinner.style.display = 'none'; // Hide spinner
                         resultDiv.innerText = 'Error predicting investment.';

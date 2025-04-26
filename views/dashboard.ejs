@@ -229,7 +229,11 @@
     </nav>
 
     <div class="welcome-message">
+<<<<<<< HEAD
         <span>Welcome, <%= user.first_name + ' ' + user.last_name %></span> <!-- Dynamic Full Name -->
+=======
+        <span>Welcome, <%= user.first_name %></span> <!-- Dynamic Full Name -->
+>>>>>>> 402b59f8faac3b45c2a0e7b31933c1cbec434831
     </div>
 
     <div class="container">
@@ -309,7 +313,11 @@
                 // Create a financial overview chart
                 const ctx = document.getElementById('overviewChart').getContext('2d');
                 new Chart(ctx, {
+<<<<<<< HEAD
                     type: 'doughnut',
+=======
+                    type: 'pie',
+>>>>>>> 402b59f8faac3b45c2a0e7b31933c1cbec434831
                     data: {
                         labels: ['Income', 'Assets', 'Expenses', 'Debt', 'Liabilities', 'Profit', 'Savings'],
                         datasets: [{
@@ -371,6 +379,7 @@
             }
             
         }
+<<<<<<< HEAD
     </script>   
     <!-- Floating Chatbot Button -->
     <button id="chatbotToggle" class="chatbot-btn">💬</button>
@@ -533,5 +542,8 @@
         </script>
         
  
+=======
+    </script>    
+>>>>>>> 402b59f8faac3b45c2a0e7b31933c1cbec434831
 </body>
 </html>

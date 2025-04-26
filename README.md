@@ -10,10 +10,10 @@ An intelligent platform helps you manage your finances by analyzing your income,
      1. FrontEnd : HTML, CSS, JavaScript
      2. BackEnd : Node js, Express js
      3. Database : MySQL
-     4. Data Analysis : Python pandas, numpy
-     5. Machine Learning Model : Scikit-learn
-     6. Visualisation Tools : Matplotlib
-     7. Other Tools : Vs Code, Github, Docker
+     4. Data Analysis : Python pandas, numpy, scikit-learn
+     5. Machine Learning Model : Gradient Boost
+     6. Visualisation Tools : Chart.js
+     7. Other Tools : Vs Code, Github, Mysql Workbench
 
 # Steps to Setup the application :-
      1. Setup MYSQL Database :
@@ -21,6 +21,7 @@ An intelligent platform helps you manage your finances by analyzing your income,
               CREATE DATABASE `financial_assistant`;
 
            -- Create the users table
+              use financial_assistant;
               CREATE TABLE `users` (
                  `email` varchar(100) NOT NULL,
                  `first_name` varchar(50) DEFAULT NULL,
@@ -55,6 +56,7 @@ An intelligent platform helps you manage your finances by analyzing your income,
 
               
             -- Create the transactions table
+              use financial_assistant;
               CREATE TABLE `history` (
                  `id` int NOT NULL AUTO_INCREMENT,
                  `email` varchar(100) NOT NULL,
@@ -91,4 +93,4 @@ An intelligent platform helps you manage your finances by analyzing your income,
                 >> node app.js      //here "app.js" should be the js file name of you application handling all the routes and backend services.
                                     //If everything is good command will show "database connection successful" as output and server start running on 'localhost port:3000'.
                 //Make sure no other app/service is running on this localhost port, if so then change the port at the end in app.js file and run above command again.
-          5. Now visit to link "localhost:3000/index.html" to visit Home Page(index.html) to visit application.
+          5. Now visit to link "localhost:3001/index.html" to visit Home Page(index.html) to visit application.
